@@ -64,10 +64,10 @@ fi
 fsType="$(/usr/sbin/diskutil info / | /usr/bin/awk 'sub(/File System Personality: /,""){print $0}')"
 
 # Variable to determine architecture of Mac
-platform=$(/usr/bin/arch)
+#platform=$(/usr/bin/arch)
 
 # Exit if not running on Apple Silicon
-if [[ "$platform" = "arm64" ]]; then
+#if [[ "$platform" = "arm64" ]]; then
 
 # Variable to gather list of admins
 # adminusers=$(/usr/bin/dscl . -read /Groups/admin | /usr/bin/awk '/GroupMembership:/{for(i=3;i<=NF;++i)print $i}')
@@ -129,7 +129,7 @@ else
         voList+=", $user"
     done
 fi
-fi
+#fi
 
 
 #echo $voList
