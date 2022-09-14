@@ -18,19 +18,20 @@ $sum = (($CurrentVMStorageState |Where-Object {$_.Letter -like "$volume"})."Size
 $physicalvolumesize=(Get-Volume -DriveLetter $volume).Size/1GB
 
 $result += "Currently $volume drive has  $([Math]::Truncate($sum/$physicalvolumesize*100))% provisioned "
-
+ write-host "Currently $volume drive has  $([Math]::Truncate($sum/$physicalvolumesize*100))% provisioned"
 if ($sum -gt $physicalvolumesize) {
     $createdattoalert += "Currently $volume drive has  $([Math]::Truncate($sum/$physicalvolumesize*100))% provisioned"
+   
 write-host hey $volume is overprovisioned btw
 
 }
 }
 if ($createdattoalert -ne $null){
     write-host $createdattoalert
-    write-DRRMAlert HyperV Host $env:computername is currently over provisioned
-    write-DRMMDiag $createdattoalert $result
+    write-DRRMAlert "HyperV Host $env:computername is currently over provisioned"
+    write-DRMMDiag "$createdattoalert $result"
     exit 1
 } else {
-    write-DRRMAlert HyperV Host $env:computername healthy
+    write-DRRMAlert "HyperV Host $env:computername healthy"
     write-DRMMDiag $result
 }
